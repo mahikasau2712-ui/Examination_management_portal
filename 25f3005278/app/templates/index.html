@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="home-hero mb-5">
+  <div class="hero-copy">
+    <div class="hero-kicker"><span class="hero-kicker-dot"></span> EXAMINATION MANAGEMENT PORTAL</div>
+    <h1>Examination<br><em>Management Portal.</em></h1>
+    <p>Manage examination schedules, slot bookings and evaluation results in one place.</p>
+    <div class="hero-actions">
+      <a class="btn btn-light btn-lg" href="{{ url_for('main.examinations') }}">View examinations <span aria-hidden="true">↗</span></a>
+      {% if not current_user.is_authenticated %}<a class="hero-secondary-link" href="{{ url_for('auth.register', role='examiner') }}">Examiner registration <span aria-hidden="true">→</span></a>{% endif %}
+    </div>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+    <div class="hero-note"><div class="note-top"><span>EMP</span><span>EXAMS</span></div><div class="note-mark">✳</div><div class="note-title">Examination<br>Management<br>Portal</div><div class="note-bottom"><span>ADMIN</span><span>EXAMINER</span><span>STUDENT</span></div></div>
+  </div>
+</section>
+
+<section class="open-section">
+  <div class="section-heading"><h2>Open for booking</h2></div>
+  <div class="row g-3 g-lg-4">
+    {% for exam in exams %}
+    <div class="col-md-6 col-lg-4"><article class="exam-card h-100">
+      <div class="exam-card-top"><span class="exam-course">{{ exam.course.code }}</span><span class="open-indicator"><span></span> BOOKING OPEN</span></div>
+      <h3>{{ exam.name }}</h3><p class="exam-kind">{{ exam.course.name }}</p>
+      <div class="exam-meta"><span>{{ exam.exam_type }}</span><span class="meta-dot">·</span><span>{{ exam.duration_minutes }} minutes</span></div>
+      <a class="exam-card-link" href="{{ url_for('main.examinations') }}">View examination <span aria-hidden="true">↗</span></a>
+    </article></div>
+    {% else %}
+    <div class="col-12"><div class="empty-exams"><span class="empty-icon">✳</span><div><h3>No examinations are open for booking.</h3><p>Examinations will appear here when student booking opens.</p></div></div></div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

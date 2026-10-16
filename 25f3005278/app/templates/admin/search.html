@@ -1,0 +1,6 @@
+{% extends 'base.html' %}{% block title %}Search{% endblock %}{% block content %}
+<p class="eyebrow">ADMINISTRATION</p><h1 class="h2">Students, examiners &amp; examinations</h1>
+<form class="d-flex gap-2 my-4"><input class="form-control search-box" name="q" value="{{ q }}" placeholder="Filter by name or email"><button class="btn btn-primary">Search</button>{% if q %}<a class="btn btn-outline-secondary" href="{{ url_for('admin.search') }}">Clear</a>{% endif %}</form>
+<div class="row g-4"><div class="col-lg-4"><h2 class="h5">Students ({{ students|length }})</h2>{% for u in students %}<p>{{ u.name }} <span class="text-secondary">{{ u.email }}</span></p>{% else %}<p class="text-secondary">No matching students.</p>{% endfor %}</div>
+<div class="col-lg-4"><h2 class="h5">Examiners ({{ staff|length }})</h2>{% for u in staff %}<p>{{ u.name }} <span class="text-secondary">{{ u.email }} · {{ 'approved' if u.approved else 'pending' }}</span></p>{% else %}<p class="text-secondary">No matching examiners.</p>{% endfor %}</div>
+<div class="col-lg-4"><h2 class="h5">Examinations ({{ exams|length }})</h2>{% for e in exams %}<p>{{ e.name }} <span class="text-secondary">{{ e.course.code }} · {{ e.status }}</span></p>{% else %}<p class="text-secondary">No matching examinations.</p>{% endfor %}</div></div>{% endblock %}
